@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Personal research site</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Plan: a small desktop. A menu bar on top, app icons down the left of a dotted
+     wallpaper, and each section opens as a window you can drag, stack and close.
+     Pixel type for the desktop's own chrome, a plain readable face inside windows.
+     Chunky outlines and hard shadows; one tint per app. On phones the windows
+     stack in a single column instead of floating. */
+  --wall: #e3e7f7;
+  --dot: #c2cae8;
+  --window: #fdfdfb;
+  --surface: #eceef7;
+  --ink: #151824;
+  --muted: #5a627a;
+  --rule: #d6daea;
+  --line: #151824;
+  --shadow: #151824;
+  /* App tints, the same in both themes; text on them is always --on-tint. */
+  --blue: #7b9bff;
+  --orange: #ff9a4a;
+  --green: #6fd19b;
+  --yellow: #ffd257;
+  --pink: #ff94bb;
+  --on-tint: #151824;
+  --font-ui: "Pixelify Sans", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --font-body: "Atkinson Hyperlegible", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --wall: #14172b;
+    --dot: #272c49;
+    --window: #1e2238;
+    --surface: #2a2f4b;
+    --ink: #eceefa;
+    --muted: #a5acc8;
+    --rule: #363c5c;
+    --line: #8a93c4;
+    --shadow: #070916;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --wall: #14172b;
+  --dot: #272c49;
+  --window: #1e2238;
+  --surface: #2a2f4b;
+  --ink: #eceefa;
+  --muted: #a5acc8;
+  --rule: #363c5c;
+  --line: #8a93c4;
+  --shadow: #070916;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--wall);
+  background-image: radial-gradient(var(--dot) 1.2px, transparent 1.4px);
+  background-size: 22px 22px;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+[hidden] { display: none !important; }
+h1, h2, h3 { margin: 0; text-wrap: balance; }
+p { margin: 0; }
+a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--tint, var(--blue)); text-decoration-thickness: 2px; text-underline-offset: 0.2em; }
+a:hover { text-decoration-thickness: 3px; }
+a:focus-visible, button:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; border-radius: 4px; }
+.ph { text-decoration: underline dotted var(--muted); text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
+
+/* ---------- Menu bar ---------- */
+.menubar {
+  flex: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.375rem 1rem;
+  padding: 0.375rem 0.875rem;
+  background: var(--window);
+  border-bottom: 2px solid var(--line);
+  font-family: var(--font-ui);
+  font-size: 0.9375rem;
+  line-height: 1.4;
+}
+.menubar-left { display: flex; align-items: center; gap: 0.5rem; font-weight: 600; }
+.menubar-right { display: flex; flex-wrap: wrap; align-items: center; gap: 0.375rem 0.75rem; }
+.mark { flex: none; display: block; }
+.mark .weak { fill: var(--blue); }
+.mark .strong { fill: var(--orange); }
+.mark line { stroke: var(--ink); stroke-width: 1.5; }
+.clock { display: none; color: var(--muted); font-variant-numeric: tabular-nums; }
+.toggle {
+  font: inherit;
+  color: var(--ink);
+  background: var(--window);
+  border: 2px solid var(--line);
+  border-radius: 6px;
+  padding: 0 0.5rem;
+  cursor: pointer;
+}
+.toggle[aria-pressed="true"] { background: var(--yellow); color: var(--on-tint); }
+
+/* ---------- Desktop ---------- */
+.desktop { flex: 1 0 auto; display: flex; flex-direction: column; gap: 1.25rem; padding-bottom: 2rem; }
+.home { order: -100000; display: flex; flex-direction: column; gap: 1.5rem; padding: 1.5rem 1.25rem 0.25rem; }
+.hello { display: flex; flex-direction: column; gap: 0.25rem; }
+.hello h1 { font-family: var(--font-ui); font-size: 2.25rem; font-weight: 700; line-height: 1.05; }
+.hello p { font-family: var(--font-ui); font-size: 1.0625rem; color: var(--muted); }
+.icon-group { display: flex; flex-direction: column; gap: 0.625rem; }
+.group-label { font-family: var(--font-ui); font-size: 0.8125rem; color: var(--muted); }
+.icons { display: grid; grid-template-columns: repeat(3, 4.75rem); gap: 0.875rem 0.25rem; }
+.icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.375rem;
+  text-decoration: none;
+  font-family: var(--font-ui);
+  font-size: 0.875rem;
+  line-height: 1.3;
+}
+.icon-tile {
+  width: 3.5rem;
+  height: 3.5rem;
+  display: grid;
+  place-items: center;
+  background: var(--tint);
+  color: var(--on-tint);
+  border: 2px solid var(--line);
+  border-radius: 14px;
+  box-shadow: 3px 3px 0 var(--shadow);
+  transition: transform 80ms, box-shadow 80ms;
+}
+.icon-tile svg { display: block; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.icon-tile svg .solid { fill: currentColor; stroke: none; }
+.icon:hover .icon-tile { transform: translate(-1px, -1px); box-shadow: 4px 4px 0 var(--shadow); }
+.icon:active .icon-tile { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--shadow); }
+.icon-label { padding: 0 0.375rem; border-radius: 4px; }
+.icon.is-open .icon-label { background: var(--ink); color: var(--window); }
+.hint, .home-foot { font-family: var(--font-ui); font-size: 0.8125rem; line-height: 1.45; color: var(--muted); }
+.home-foot { display: flex; flex-direction: column; gap: 0.25rem; }
+.desk-only { display: none; }
+
+.t-blue { --tint: var(--blue); }
+.t-orange { --tint: var(--orange); }
+.t-green { --tint: var(--green); }
+.t-yellow { --tint: var(--yellow); }
+.t-pink { --tint: var(--pink); }
+
+/* ---------- Windows ---------- */
+.window {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  margin: 0 1rem;
+  background: var(--window);
+  border: 2px solid var(--line);
+  border-radius: 10px;
+  box-shadow: 5px 5px 0 var(--shadow);
+  overflow: hidden;
+  scroll-margin-top: 0.75rem;
+}
+.window:focus { outline: none; }
+.titlebar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.3125rem 0.4375rem 0.3125rem 0.875rem;
+  background: var(--surface);
+  color: var(--muted);
+  border-bottom: 2px solid var(--line);
+  font-family: var(--font-ui);
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.window.is-active .titlebar { background: var(--tint, var(--blue)); color: var(--on-tint); }
+.titlebar-title { min-width: 0; overflow-wrap: anywhere; }
+.close {
+  flex: none;
+  width: 1.625rem;
+  height: 1.625rem;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--ink);
+  background: var(--window);
+  border: 2px solid var(--line);
+  border-radius: 6px;
+  cursor: pointer;
+}
+.close:hover { background: var(--pink); color: var(--on-tint); }
+.window-body {
+  min-height: 0;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.25rem 1.375rem 1.5rem;
+}
+@keyframes pop { from { transform: scale(0.96); } to { transform: scale(1); } }
+.window.pop { animation: pop 140ms ease-out; }
+
+/* Inside windows */
+.win-title { font-family: var(--font-ui); font-size: 1.625rem; font-weight: 700; line-height: 1.15; }
+.lede { font-size: 1.125rem; line-height: 1.5; }
+.meta { font-family: var(--font-ui); font-size: 0.875rem; line-height: 1.4; color: var(--muted); font-variant-numeric: tabular-nums; }
+.section-label { font-family: var(--font-ui); font-size: 0.875rem; font-weight: 600; color: var(--muted); margin-top: 0.5rem; }
+.tag {
+  display: inline-block;
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--on-tint);
+  background: var(--yellow);
+  border-radius: 4px;
+  padding: 0 0.375rem;
+  vertical-align: 0.15em;
+  margin-left: 0.25rem;
+}
+.facts { display: grid; grid-template-columns: 5.5rem minmax(0, 1fr); gap: 0.375rem 1rem; margin: 0; }
+.facts dt { font-family: var(--font-ui); font-size: 0.875rem; color: var(--muted); padding-top: 0.1em; }
+.facts dd { margin: 0; }
+.entries { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.entry { display: flex; flex-direction: column; gap: 0.25rem; padding: 0.875rem 0; border-top: 2px dotted var(--rule); }
+.entry:last-child { padding-bottom: 0; }
+.entry-title { font-size: 1.0625rem; font-weight: 700; line-height: 1.35; }
+.entry-text { color: var(--muted); line-height: 1.5; }
+.entry ul { margin: 0.125rem 0 0; padding-left: 1.125rem; display: flex; flex-direction: column; gap: 0.25rem; line-height: 1.5; }
+.entry-links { display: flex; flex-wrap: wrap; gap: 0.25rem 1rem; font-family: var(--font-ui); font-size: 0.875rem; color: var(--muted); }
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.625rem 0.75rem; }
+.btn {
+  display: inline-block;
+  font-family: var(--font-ui);
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  color: var(--on-tint);
+  background: var(--tint);
+  border: 2px solid var(--line);
+  border-radius: 8px;
+  box-shadow: 2px 2px 0 var(--shadow);
+  padding: 0.1875rem 0.75rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+.btn:active { transform: translate(2px, 2px); box-shadow: none; }
+.email { font-family: var(--font-mono); font-size: 1rem; overflow-wrap: anywhere; }
+
+/* Posts */
+.prose { display: flex; flex-direction: column; gap: 1rem; font-size: 1.0625rem; max-width: 38rem; }
+.prose h2 { font-family: var(--font-ui); font-size: 1.25rem; font-weight: 700; line-height: 1.25; margin-top: 0.5rem; }
+.prose ul, .prose ol { margin: 0; padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.25rem; }
+.prose blockquote { margin: 0; padding-left: 1rem; border-left: 3px solid var(--tint); font-style: italic; }
+.prose code { font-family: var(--font-mono); font-size: 0.875em; background: var(--surface); padding: 0.1em 0.35em; border-radius: 4px; }
+.prose pre { margin: 0; padding: 0.875rem 1rem; background: var(--surface); border: 2px solid var(--rule); border-radius: 8px; overflow-x: auto; font-size: 0.8125rem; line-height: 1.6; }
+.prose pre code { background: none; padding: 0; font-size: inherit; }
+
+/* Separation plot */
+.figure { margin: 0; display: flex; flex-direction: column; gap: 0.75rem; }
+.figure canvas { display: block; width: 100%; height: 220px; }
+.figure figcaption { color: var(--muted); line-height: 1.5; }
+.legend { display: flex; flex-wrap: wrap; gap: 0.25rem 1rem; font-family: var(--font-ui); font-size: 0.875rem; color: var(--muted); list-style: none; margin: 0; padding: 0; }
+.legend li { display: flex; align-items: center; gap: 0.375rem; }
+.legend li::before { content: ""; width: 0.625rem; height: 0.625rem; border-radius: 50%; background: var(--blue); }
+.legend li.strong::before { background: var(--orange); }
+
+/* ---------- Wide screens: windows float ---------- */
+@media (min-width: 760px) {
+  html, body { height: 100%; }
+  .desktop { flex: 1 1 0; min-height: 0; position: relative; display: block; padding: 0; overflow: hidden; }
+  .clock { display: inline; }
+  .home { position: absolute; top: 0; left: 0; bottom: 0; width: 17rem; padding: 1.75rem 1.5rem 1.25rem; }
+  .home-foot { margin-top: auto; }
+  .desk-only { display: inline; }
+  .window { position: absolute; top: 28px; left: 300px; width: 540px; margin: 0; box-shadow: 6px 6px 0 var(--shadow); }
+  .titlebar { cursor: grab; touch-action: none; }
+  .titlebar:active { cursor: grabbing; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .window.pop { animation: none; }
+  .icon-tile { transition: none; }
+}
+</style>
+</head>
+<body>
+
+<header class="menubar">
+  <div class="menubar-left">
+    <svg class="mark" width="28" height="14" viewBox="0 0 28 14" aria-hidden="true">
+      <circle class="weak" cx="5" cy="7" r="4.5"/>
+      <line x1="14" y1="0.5" x2="14" y2="13.5"/>
+      <circle class="strong" cx="23" cy="7" r="4.5"/>
+    </svg>
+    <span><span class="ph">your name</span>'s desktop</span>
+  </div>
+  <div class="menubar-right">
+    <span class="clock" id="clock"></span>
+    <button class="toggle" id="theme-toggle" type="button" aria-pressed="false">dark mode: <span data-state>off</span></button>
+    <button class="toggle" id="sound-toggle" type="button" aria-pressed="false">sound: <span data-state>off</span></button>
+  </div>
+</header>
+
+<main class="desktop" id="desktop">
+
+  <!-- ============ HOME: greeting and app icons ============ -->
+  <div class="home">
+    <div class="hello">
+      <h1>hi! i'm <span class="ph">your name</span></h1>
+      <p>ML researcher, senior at Princeton</p>
+    </div>
+
+    <nav class="icons" aria-label="Open a window">
+      <a class="icon t-blue" href="#about" data-open="about">
+        <span class="icon-tile"><svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="4"/><path d="M4.5 20.5c0-4 3.4-6.5 7.5-6.5s7.5 2.5 7.5 6.5"/></svg></span>
+        <span class="icon-label">about</span>
+      </a>
+      <a class="icon t-green" href="#research" data-open="research">
+        <span class="icon-tile"><svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3.5v17h16.5"/><circle class="solid" cx="9" cy="15" r="1.6"/><circle class="solid" cx="12.5" cy="11" r="1.6"/><circle class="solid" cx="16" cy="12.5" r="1.6"/><circle class="solid" cx="18.5" cy="6.5" r="1.6"/></svg></span>
+        <span class="icon-label">research</span>
+      </a>
+      <a class="icon t-orange" href="#writing" data-open="writing">
+        <span class="icon-tile"><svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 4.5l4 4L9 19l-5 1 1-5z"/><path d="M13 7l4 4"/></svg></span>
+        <span class="icon-label">writing</span>
+      </a>
+      <a class="icon t-yellow" href="#resume" data-open="resume">
+        <span class="icon-tile"><svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4.5 4.5V21H6z"/><path d="M14 3v4.5h4.5"/><path d="M9 12h6M9 15.5h6"/></svg></span>
+        <span class="icon-label">resume</span>
+      </a>
+      <a class="icon t-pink" href="#contact" data-open="contact">
+        <span class="icon-tile"><svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5.5" width="18" height="13" rx="1.5"/><path d="M3.5 7l8.5 6 8.5-6"/></svg></span>
+        <span class="icon-label">contact</span>
+      </a>
+    </nav>
+
+    <div class="icon-group">
+      <p class="group-label">fun stuff</p>
+      <nav class="icons" aria-label="Open something fun">
+        <a class="icon t-blue" href="#separator" data-open="separator">
+          <span class="icon-tile"><svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true"><circle class="solid" cx="6" cy="9" r="2.2"/><circle class="solid" cx="7.5" cy="15.5" r="2.2"/><path d="M12 3.5v17"/><circle cx="17" cy="8" r="2"/><circle cx="18" cy="15" r="2"/></svg></span>
+          <span class="icon-label">separator</span>
+        </a>
+      </nav>
+    </div>
+
+    <p class="hint">Click an icon to open it.<span class="desk-only"> Drag windows by their title bars.</span></p>
+
+    <footer class="home-foot">
+      <p>© 2026 <span class="ph">your name</span></p>
+      <p>Dotted text and anything tagged draft or sample is placeholder.</p>
+    </footer>
+  </div>
+
+  <!-- ============ WINDOWS ============
+       Each <section class="window"> is one window. data-window is its name (and its link,
+       like #research), data-title is the text in its title bar, and data-x / data-y / data-w
+       are where it first opens on a wide screen. -->
+
+  <section class="window t-blue" data-window="about" data-title="about.txt" data-x="320" data-y="24" data-w="540">
+    <h2 class="win-title">about me</h2>
+    <p class="lede">I'm a senior at Princeton studying machine learning. I work on how to evaluate language models, and on choosing the data that improves them after training.</p>
+    <p>I do research with Elad Hazan's group, and I write about what I'm learning along the way. I'm looking for full-time industry research roles starting in <span class="ph">2027</span>.</p>
+    <dl class="facts">
+      <dt>school</dt>
+      <dd>Princeton University, <span class="ph">B.S.E. in Computer Science, class of 2027</span></dd>
+      <dt>interests</dt>
+      <dd>Evaluation, post-training, data selection</dd>
+      <dt>right now</dt>
+      <dd>Building SepaRank, a way to find the problems that separate strong models from weak ones</dd>
+    </dl>
+    <p class="actions">
+      <a class="btn t-green" href="#research" data-open="research">open research</a>
+      <a class="btn t-orange" href="#writing" data-open="writing">open writing</a>
+    </p>
+  </section>
+
+  <!-- To add a project or paper, copy one <li class="entry"> block and edit it. -->
+  <section class="window t-green" data-window="research" data-title="research" data-x="384" data-y="100" data-w="600">
+    <h2 class="win-title">research</h2>
+    <p>I'm interested in evaluation and post-training: how we measure what a model can do, and how we pick the data that makes it better.</p>
+    <ul class="entries">
+      <li class="entry">
+        <p class="meta">2026, ongoing</p>
+        <h3 class="entry-title">SepaRank: ranking problems by how well they separate models <span class="tag">draft</span></h3>
+        <p class="meta"><span class="ph">Your Name</span>, advised by Elad Hazan · Princeton University</p>
+        <p class="entry-text">A proposer model writes problems, and each one is scored by how sharply it separates stronger models from weaker ones. I'm testing whether fine-tuning a small open-weight model on the high-separation problems beats fine-tuning on randomly chosen ones.</p>
+        <p class="entry-links"><span class="ph">writeup</span><span class="ph">code</span><a href="#separator" data-open="separator">see it move</a></p>
+      </li>
+      <li class="entry">
+        <p class="meta"><span class="ph">2027</span></p>
+        <h3 class="entry-title"><span class="ph">Senior thesis title</span> <span class="tag">draft</span></h3>
+        <p class="meta"><span class="ph">Your Name</span> · Senior thesis, Princeton University</p>
+        <p class="entry-text"><span class="ph">One or two sentences on the question, what you did, and what you found.</span></p>
+        <p class="entry-links"><span class="ph">pdf</span><span class="ph">code</span></p>
+      </li>
+    </ul>
+  </section>
+
+  <!-- The list fills itself in from the <article data-post> blocks further down. -->
+  <section class="window t-orange" data-window="writing" data-title="writing" data-x="416" data-y="138" data-w="560">
+    <h2 class="win-title">writing</h2>
+    <p>Notes on AI research, mostly evaluation, training data, and things I got wrong the first time.</p>
+    <ul class="entries" data-post-list></ul>
+  </section>
+
+  <section class="window t-yellow" data-window="resume" data-title="resume" data-x="352" data-y="62" data-w="620">
+    <h2 class="win-title">resume</h2>
+    <p class="meta">Last updated November 2026</p>
+
+    <h3 class="section-label">education</h3>
+    <ul class="entries">
+      <li class="entry">
+        <p class="meta"><span class="ph">2023 to 2027</span></p>
+        <p class="entry-title">Princeton University</p>
+        <p class="entry-text"><span class="ph">B.S.E. in Computer Science</span>. <span class="ph">Relevant coursework, honors, GPA if you want it shown.</span></p>
+      </li>
+    </ul>
+
+    <h3 class="section-label">research</h3>
+    <ul class="entries">
+      <li class="entry">
+        <p class="meta"><span class="ph">2026 to now</span></p>
+        <p class="entry-title">Undergraduate researcher, Hazan group <span class="tag">draft</span></p>
+        <p class="entry-text">Princeton University, advised by Elad Hazan</p>
+        <ul>
+          <li>Designed SepaRank, a method that scores generated problems by how well they separate strong models from weak ones.</li>
+          <li>Running fine-tuning experiments that compare high-separation problems against a random baseline on a small open-weight model.</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h3 class="section-label">experience</h3>
+    <ul class="entries">
+      <li class="entry">
+        <p class="meta"><span class="ph">Summer 2026</span></p>
+        <p class="entry-title"><span class="ph">Role, Company</span> <span class="tag">draft</span></p>
+        <ul>
+          <li><span class="ph">What you built and what it changed, with a number if you have one.</span></li>
+          <li><span class="ph">A second line only if it adds something new.</span></li>
+        </ul>
+      </li>
+    </ul>
+
+    <h3 class="section-label">skills</h3>
+    <dl class="facts">
+      <dt>languages</dt>
+      <dd><span class="ph">Python, C++, SQL</span></dd>
+      <dt>ML</dt>
+      <dd><span class="ph">PyTorch, fine-tuning open-weight models, evaluation harnesses</span></dd>
+    </dl>
+  </section>
+
+  <section class="window t-pink" data-window="contact" data-title="contact" data-x="640" data-y="214" data-w="420">
+    <h2 class="win-title">say hi</h2>
+    <p>The best way to reach me is email. I'm happy to talk about research, roles, or anything I've written.</p>
+    <p class="email" id="email-text"><span class="ph">you@princeton.edu</span></p>
+    <p class="actions">
+      <button class="btn" id="copy-email" type="button">copy email</button>
+      <span class="meta" id="copy-status" role="status"></span>
+    </p>
+    <dl class="facts">
+      <dt>elsewhere</dt>
+      <dd><span class="ph">GitHub</span> · <span class="ph">Google Scholar</span> · <span class="ph">LinkedIn</span></dd>
+    </dl>
+  </section>
+
+  <section class="window t-blue" data-window="separator" data-title="separator.app" data-x="448" data-y="176" data-w="580">
+    <h2 class="win-title">what a good problem does</h2>
+    <figure class="figure">
+      <canvas id="sep-canvas" role="img" aria-label="A strip plot. Each dot is a model, placed by its score on one problem. The dots start mixed together, then the weak models move to the low end and the strong models to the high end."></canvas>
+      <figcaption>One dot per model, placed by its score on a single problem. A weak problem leaves everyone mixed together. A good one pulls the two groups apart, and that gap is what SepaRank ranks by.</figcaption>
+    </figure>
+    <div class="actions">
+      <button class="btn" id="sep-replay" type="button">mix them again</button>
+      <ul class="legend">
+        <li>weak models</li>
+        <li class="strong">strong models</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ BLOG POSTS ============
+       To publish a post, copy one <article> block, then change:
+         data-post     a short name with letters, digits and hyphens (it becomes the link
+                       and the window's file name)
+         data-date     YYYY-MM-DD
+         data-summary  the one line shown in the writing window
+       Write the post inside <div class="prose">. Newest posts sort to the top by date.
+       Remove data-sample when the post is real. -->
+
+  <article class="window t-orange" data-post="why-this-blog" data-date="2026-11-23" data-sample
+           data-summary="What I plan to write about here, and why I'm doing it in public.">
+    <h2 class="win-title">Why I'm starting this blog</h2>
+    <div class="prose">
+      <p>This is a sample post. Replace it with your own first post.</p>
+      <p>A good opener says what you'll write about and who it's for. For a research blog that could be experiment notes, paper readings, or the questions you keep coming back to.</p>
+      <p>Keep the first one short. The second post is the hard one.</p>
+    </div>
+  </article>
+
+  <article class="window t-orange" data-post="formatting-sample" data-date="2026-11-20" data-sample
+           data-summary="Headings, lists, quotes and code, so you can see how a post will look.">
+    <h2 class="win-title">A formatting sample</h2>
+    <div class="prose">
+      <p>This sample shows everything a post can contain. Paragraphs are set for reading, with <a href="#research" data-open="research">links</a>, <em>emphasis</em> and inline code like <code>model.eval()</code>.</p>
+
+      <h2>A section heading</h2>
+      <p>Lists work for steps or short sets of points:</p>
+      <ul>
+        <li>State the question in one sentence.</li>
+        <li>Show the baseline before the result.</li>
+        <li>Say what the experiment does not show.</li>
+      </ul>
+
+      <blockquote><p>Quotes sit behind a colored rule, in italics.</p></blockquote>
+
+      <h2>Code</h2>
+      <p>Code blocks scroll sideways and never break the window:</p>
+<pre><code>def separation(scores_strong, scores_weak):
+    """How much better strong models do on one problem."""
+    return scores_strong.mean() - scores_weak.mean()
+
+ranked = sorted(problems, key=lambda p: separation(*p.scores), reverse=True)</code></pre>
+      <p>That's the whole toolkit.</p>
+    </div>
+  </article>
+
+</main>
+
+<script>
+/* ---------- The desktop: posts, windows, menu bar ---------- */
+(function () {
+  var desk = document.getElementById('desktop');
+  var wide = window.matchMedia('(min-width: 760px)');
+  var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  function formatDate(iso) {
+    var p = iso.split('-');
+    return MONTHS[Number(p[1]) - 1] + ' ' + Number(p[2]) + ', ' + p[0];
+  }
+  function clamp(x, a, b) { return x < a ? a : x > b ? b : x; }
+  function el(tag, className, text) {
+    var node = document.createElement(tag);
+    if (className) node.className = className;
+    if (text != null) node.textContent = text;
+    return node;
+  }
+
+  /* Sound: tiny synthesized blips, off until the visitor turns them on. */
+  var audio = null, soundOn = false;
+  function tone(freq, start, length) {
+    var osc = audio.createOscillator(), gain = audio.createGain(), t = audio.currentTime + start;
+    osc.type = 'square';
+    osc.frequency.value = freq;
+    gain.gain.setValueAtTime(0.03, t);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t + length);
+    osc.connect(gain); gain.connect(audio.destination);
+    osc.start(t); osc.stop(t + length + 0.02);
+  }
+  function blip(kind) {
+    if (!soundOn || !audio) return;
+    try {
+      if (kind === 'open') { tone(523, 0, 0.07); tone(784, 0.06, 0.09); }
+      else if (kind === 'close') { tone(659, 0, 0.06); tone(440, 0.05, 0.09); }
+      else tone(660, 0, 0.05);
+    } catch (e) {}
+  }
+
+  /* Posts become windows named post-<name>, and fill the writing list. */
+  var posts = Array.prototype.slice.call(document.querySelectorAll('article[data-post]')).map(function (node, i) {
+    var slug = node.getAttribute('data-post');
+    var title = node.querySelector('.win-title');
+    node.setAttribute('data-window', 'post-' + slug);
+    node.setAttribute('data-title', slug + '.txt');
+    node.setAttribute('data-x', 480 + (i % 4) * 32);
+    node.setAttribute('data-y', 43 + (i % 4) * 38);
+    node.setAttribute('data-w', 620);
+    var date = el('p', 'meta', formatDate(node.getAttribute('data-date')));
+    title.parentNode.insertBefore(date, title.nextSibling);
+    return {
+      slug: slug,
+      date: node.getAttribute('data-date'),
+      title: title.textContent,
+      summary: node.getAttribute('data-summary') || '',
+      sample: node.hasAttribute('data-sample')
+    };
+  }).sort(function (a, b) { return a.date < b.date ? 1 : a.date > b.date ? -1 : 0; });
+
+  Array.prototype.forEach.call(document.querySelectorAll('[data-post-list]'), function (list) {
+    posts.forEach(function (post) {
+      var li = el('li', 'entry');
+      li.appendChild(el('p', 'meta', formatDate(post.date)));
+      var title = el('p', 'entry-title');
+      var link = el('a', null, post.title);
+      link.href = '#post-' + post.slug;
+      link.setAttribute('data-open', 'post-' + post.slug);
+      title.appendChild(link);
+      if (post.sample) { title.appendChild(document.createTextNode(' ')); title.appendChild(el('span', 'tag', 'sample')); }
+      li.appendChild(title);
+      li.appendChild(el('p', 'entry-text', post.summary));
+      list.appendChild(li);
+    });
+  });
+
+  /* Give every window a title bar with a close button. */
+  var windows = Array.prototype.slice.call(document.querySelectorAll('.window'));
+  var byName = {};
+  var zTop = 10, openCount = 0;
+
+  windows.forEach(function (win) {
+    var name = win.getAttribute('data-window');
+    var titleText = win.getAttribute('data-title') || name;
+    byName[name] = win;
+
+    var body = el('div', 'window-body');
+    while (win.firstChild) body.appendChild(win.firstChild);
+    var bar = el('header', 'titlebar');
+    bar.appendChild(el('span', 'titlebar-title', titleText));
+    var close = el('button', 'close', '×');
+    close.type = 'button';
+    close.setAttribute('aria-label', 'Close ' + titleText);
+    bar.appendChild(close);
+    win.appendChild(bar);
+    win.appendChild(body);
+    win.setAttribute('role', 'region');
+    win.setAttribute('aria-label', titleText);
+    win.tabIndex = -1;
+    win.hidden = true;
+
+    close.addEventListener('click', function () { closeWindow(win); });
+    win.addEventListener('pointerdown', function () { bringToFront(win); });
+
+    // Drag by the title bar (wide screens only).
+    bar.addEventListener('pointerdown', function (e) {
+      if (!wide.matches || e.target === close || e.button > 0) return;
+      var box = win.getBoundingClientRect(), area = desk.getBoundingClientRect();
+      var dx = e.clientX - box.left, dy = e.clientY - box.top;
+      try { bar.setPointerCapture(e.pointerId); } catch (err) {}
+      function move(ev) {
+        win._x = clamp(ev.clientX - area.left - dx, 80 - box.width, area.width - 80);
+        win._y = clamp(ev.clientY - area.top - dy, 0, area.height - 40);
+        win.style.left = win._x + 'px';
+        win.style.top = win._y + 'px';
+      }
+      function end() {
+        bar.removeEventListener('pointermove', move);
+        bar.removeEventListener('pointerup', end);
+        bar.removeEventListener('pointercancel', end);
+        layout(win);
+      }
+      bar.addEventListener('pointermove', move);
+      bar.addEventListener('pointerup', end);
+      bar.addEventListener('pointercancel', end);
+    });
+  });
+
+  // Position and size a window for the current screen.
+  function layout(win) {
+    if (!wide.matches) {
+      win.style.left = win.style.top = win.style.width = win.style.maxHeight = '';
+      return;
+    }
+    var areaW = desk.clientWidth, areaH = desk.clientHeight;
+    var w = Math.min(Number(win.getAttribute('data-w')) || 540, areaW - 290);
+    if (win._x == null) {
+      win._x = clamp(Number(win.getAttribute('data-x')) || 320, 274, Math.max(274, areaW - w - 16));
+      win._y = Math.min(Number(win.getAttribute('data-y')) || 28, Math.max(8, areaH - 280));
+    }
+    win.style.width = w + 'px';
+    win.style.left = win._x + 'px';
+    win.style.top = win._y + 'px';
+    win.style.maxHeight = Math.max(220, areaH - win._y - 14) + 'px';
+  }
+
+  function bringToFront(win) {
+    win.style.zIndex = ++zTop;
+    windows.forEach(function (w) { w.classList.toggle('is-active', w === win); });
+  }
+
+  function markIcons() {
+    Array.prototype.forEach.call(document.querySelectorAll('.icon[data-open]'), function (icon) {
+      var win = byName[icon.getAttribute('data-open')];
+      icon.classList.toggle('is-open', !!win && !win.hidden);
+    });
+  }
+
+  function openWindow(name, quiet) {
+    var win = byName[name];
+    if (!win) return false;
+    var wasClosed = win.hidden;
+    win.hidden = false;
+    win.style.order = -(++openCount);     // on phones, the newest window sits on top
+    layout(win);
+    bringToFront(win);
+    markIcons();
+    if (wasClosed) {
+      win.classList.remove('pop');
+      void win.offsetWidth;
+      win.classList.add('pop');
+      if (!quiet) blip('open');
+    }
+    if (!quiet) {
+      if (!wide.matches) win.scrollIntoView({ block: 'start' });
+      win.focus({ preventScroll: true });
+    }
+    return true;
+  }
+
+  function closeWindow(win) {
+    win.hidden = true;
+    win.classList.remove('is-active');
+    blip('close');
+    var rest = windows.filter(function (w) { return !w.hidden; })
+      .sort(function (a, b) { return (Number(b.style.zIndex) || 0) - (Number(a.style.zIndex) || 0); });
+    if (rest[0]) bringToFront(rest[0]);
+    markIcons();
+  }
+
+  // Icons and in-window links open windows.
+  document.addEventListener('click', function (e) {
+    var trigger = e.target.closest ? e.target.closest('[data-open]') : null;
+    if (!trigger) return;
+    var name = trigger.getAttribute('data-open');
+    if (!byName[name]) return;
+    e.preventDefault();
+    openWindow(name);
+    if (location.hash !== '#' + name) location.hash = name;
+  });
+  window.addEventListener('hashchange', function () {
+    var name = location.hash.replace('#', '');
+    var win = byName[name];
+    if (win && win.hidden) openWindow(name);
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    var active = windows.filter(function (w) { return !w.hidden && w.classList.contains('is-active'); })[0];
+    if (active) closeWindow(active);
+  });
+
+  function relayoutAll() { windows.forEach(function (w) { if (!w.hidden) layout(w); }); }
+  window.addEventListener('resize', relayoutAll);
+
+  // Start with the about window open, plus whichever window the link names.
+  openWindow('about', true);
+  var linked = location.hash.replace('#', '');
+  if (linked && linked !== 'about') openWindow(linked, true);
+
+  /* Menu bar: clock, dark mode, sound. */
+  var clock = document.getElementById('clock');
+  function tick() {
+    var now = new Date();
+    var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    var h = now.getHours(), m = now.getMinutes();
+    clock.textContent = days[now.getDay()] + ' ' + (h % 12 || 12) + ':' + (m < 10 ? '0' : '') + m + (h < 12 ? ' am' : ' pm');
+  }
+  tick();
+  setInterval(tick, 20000);
+
+  function setToggle(button, on) {
+    button.setAttribute('aria-pressed', on ? 'true' : 'false');
+    button.querySelector('[data-state]').textContent = on ? 'on' : 'off';
+  }
+  function remember(key, value) { try { localStorage.setItem(key, value); } catch (e) {} }
+  function recall(key) { try { return localStorage.getItem(key); } catch (e) { return null; } }
+
+  var root = document.documentElement;
+  var systemDark = window.matchMedia('(prefers-color-scheme: dark)');
+  var themeButton = document.getElementById('theme-toggle');
+  function isDark() {
+    var set = root.getAttribute('data-theme');
+    return set ? set === 'dark' : systemDark.matches;
+  }
+  function syncTheme() { setToggle(themeButton, isDark()); }
+  var savedTheme = recall('desktop-theme');
+  if (savedTheme === 'dark' || savedTheme === 'light') root.setAttribute('data-theme', savedTheme);
+  syncTheme();
+  themeButton.addEventListener('click', function () {
+    var next = isDark() ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    remember('desktop-theme', next);
+    syncTheme();
+    blip('click');
+  });
+  systemDark.addEventListener('change', syncTheme);
+  new MutationObserver(syncTheme).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
+
+  var soundButton = document.getElementById('sound-toggle');
+  soundButton.addEventListener('click', function () {
+    soundOn = !soundOn;
+    if (soundOn && !audio) {
+      try {
+        var Ctx = window.AudioContext || window.webkitAudioContext;
+        audio = new Ctx();
+      } catch (e) { audio = null; soundOn = false; }
+    }
+    if (audio && audio.state === 'suspended') { try { audio.resume(); } catch (e) {} }
+    setToggle(soundButton, soundOn);
+    blip('open');
+  });
+
+  /* Copy the email address. */
+  var copyButton = document.getElementById('copy-email');
+  var copyStatus = document.getElementById('copy-status');
+  copyButton.addEventListener('click', function () {
+    var address = document.getElementById('email-text').textContent.trim();
+    function say(text) {
+      copyStatus.textContent = text;
+      setTimeout(function () { copyStatus.textContent = ''; }, 2500);
+    }
+    try {
+      navigator.clipboard.writeText(address).then(
+        function () { say('copied'); blip('click'); },
+        function () { say("couldn't copy, select the address instead"); }
+      );
+    } catch (e) { say("couldn't copy, select the address instead"); }
+  });
+})();
+
+/* ---------- The separation plot ----------
+   Each dot is a model placed by its score (0 to 1) on one problem. The dots start
+   mixed, then weak models move to the low end and strong models to the high end.
+   The bracket on top spans the two group means, and its number is their difference. */
+(function () {
+  var canvas = document.getElementById('sep-canvas');
+  var button = document.getElementById('sep-replay');
+  if (!canvas || !canvas.getContext) return;
+  var ctx = canvas.getContext('2d');
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  var W = 0, H = 0, perGroup = 0, seed = 11;
+  var dots = [];
+  var T = 1;            // 0 = mixed, 1 = separated
+  var raf = null, timer = null, visible = false;
+
+  function clamp(x, a, b) { return x < a ? a : x > b ? b : x; }
+  function ease(p) { return p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2; }
+  function makeRandom(s) {
+    return function () {
+      s = (s + 0x6D2B79F5) | 0;
+      var t = Math.imul(s ^ (s >>> 15), 1 | s);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  function normal(rand) {
+    var u = Math.max(rand(), 1e-9), v = rand();
+    return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+  }
+
+  function build() {
+    var rand = makeRandom(seed);
+    dots = [];
+    for (var g = 0; g < 2; g++) {
+      var group = [];
+      for (var i = 0; i < perGroup; i++) {
+        group.push({
+          g: g,
+          mixed: clamp(0.5 + normal(rand) * 0.15, 0.08, 0.92),
+          apart: g === 1
+            ? clamp(0.75 + normal(rand) * 0.075, 0.58, 0.97)
+            : clamp(0.25 + normal(rand) * 0.075, 0.03, 0.42),
+          yMixed: clamp(normal(rand) * 0.42, -1, 1),
+          yApart: clamp(normal(rand) * 0.42, -1, 1),
+          delay: rand() * 0.35
+        });
+      }
+      // Center each group on 0.5 while mixed, so the starting separation is exactly zero.
+      var mean = group.reduce(function (sum, d) { return sum + d.mixed; }, 0) / group.length;
+      group.forEach(function (d) { d.mixed += 0.5 - mean; });
+      dots = dots.concat(group);
+    }
+  }
+
+  function token(name) {
+    return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  }
+
+  function draw() {
+    if (!W) return;
+    var color = { ink: token('--ink'), muted: token('--muted'), rule: token('--rule'), weak: token('--blue'), strong: token('--orange') };
+    var face = token('--font-ui');
+    var dpr = window.devicePixelRatio || 1;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, W, H);
+
+    var x0 = 10, x1 = W - 10;
+    var top = 50, axisY = H - 30.5;
+    var mid = (top + axisY) / 2, half = (axisY - top) / 2 - 8;
+    var radius = W < 460 ? 3.5 : 4.5;
+
+    // Axis
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = color.rule;
+    ctx.beginPath();
+    ctx.moveTo(x0, axisY); ctx.lineTo(x1, axisY);
+    for (var k = 0; k <= 4; k++) {
+      var tx = Math.round(x0 + (x1 - x0) * k / 4);
+      ctx.moveTo(tx, axisY); ctx.lineTo(tx, axisY + 5);
+    }
+    ctx.stroke();
+    ctx.fillStyle = color.muted;
+    ctx.font = '13px ' + face;
+    ctx.textBaseline = 'top';
+    ctx.textAlign = 'left';
+    ctx.fillText('lower score', x0, axisY + 10);
+    ctx.textAlign = 'right';
+    ctx.fillText('higher score', x1, axisY + 10);
+
+    // Dots
+    var sum = [0, 0];
+    dots.forEach(function (d) {
+      var p = ease(clamp((T - d.delay) / 0.65, 0, 1));
+      var score = d.mixed + (d.apart - d.mixed) * p;
+      var y = mid + (d.yMixed + (d.yApart - d.yMixed) * p) * half;
+      sum[d.g] += score;
+      ctx.fillStyle = d.g === 1 ? color.strong : color.weak;
+      ctx.beginPath();
+      ctx.arc(x0 + score * (x1 - x0), y, radius, 0, Math.PI * 2);
+      ctx.fill();
+    });
+
+    // Bracket between the two group means, with their difference as the label.
+    var meanWeak = sum[0] / perGroup, meanStrong = sum[1] / perGroup;
+    var xa = x0 + meanWeak * (x1 - x0), xb = x0 + meanStrong * (x1 - x0);
+    var by = 30;
+    ctx.strokeStyle = color.ink;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(xa, by); ctx.lineTo(xb, by);
+    ctx.moveTo(xa, by - 5); ctx.lineTo(xa, by + 5);
+    ctx.moveTo(xb, by - 5); ctx.lineTo(xb, by + 5);
+    ctx.stroke();
+
+    var gap = Math.max(0, meanStrong - meanWeak);
+    var text = 'separation ' + gap.toFixed(2);
+    ctx.font = '600 14px ' + face;
+    ctx.fillStyle = color.ink;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'bottom';
+    var tw = ctx.measureText(text).width;
+    ctx.fillText(text, clamp((xa + xb) / 2, x0 + tw / 2, x1 - tw / 2), by - 8);
+  }
+
+  function stop() {
+    if (raf) { cancelAnimationFrame(raf); raf = null; }
+    if (timer) { clearTimeout(timer); timer = null; }
+  }
+
+  // Show the dots mixed, hold for a moment, then pull them apart.
+  function play() {
+    stop();
+    T = 0;
+    draw();
+    if (reduceMotion.matches) {
+      timer = setTimeout(function () { T = 1; draw(); }, 900);
+      return;
+    }
+    var hold = 600, duration = 2400, startTime = null;
+    function frame(now) {
+      if (startTime === null) startTime = now;
+      T = clamp((now - startTime - hold) / duration, 0, 1);
+      draw();
+      raf = T < 1 ? requestAnimationFrame(frame) : null;
+    }
+    raf = requestAnimationFrame(frame);
+  }
+
+  function resize() {
+    var w = canvas.clientWidth, h = canvas.clientHeight;
+    if (!w || !h) { visible = false; stop(); T = 1; return; }   // the window is closed
+    var dpr = window.devicePixelRatio || 1;
+    var count = w < 460 ? 40 : 64;
+    W = w; H = h;
+    canvas.width = Math.round(w * dpr);
+    canvas.height = Math.round(h * dpr);
+    if (count !== perGroup) { perGroup = count; build(); }
+    if (!visible) { visible = true; play(); }                    // replay each time it opens
+    else draw();
+  }
+
+  if (button) {
+    button.addEventListener('click', function () {
+      seed += 1;
+      build();
+      play();
+    });
+  }
+
+  if ('ResizeObserver' in window) new ResizeObserver(resize).observe(canvas);
+  else window.addEventListener('resize', resize);
+  resize();
+
+  // Redraw when fonts arrive or the theme changes.
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(draw);
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', draw);
+  new MutationObserver(draw).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+})();
+</script>
+</body>
+</html>
