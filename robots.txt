@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: /assets/sanketh-kamath-resume.pdf
+Disallow: /assets/resume-pages/

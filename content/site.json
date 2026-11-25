@@ -1,0 +1,135 @@
+{
+  "name": "Sanketh Kamath",
+  "first": "Sanketh",
+  "last": "Kamath",
+  "url": "https://sankethskamath.github.io",
+  "description": "Sanketh Kamath is an undergraduate researcher at Princeton working on game-theoretic approaches to AI alignment.",
+  "affiliation": "ML research · Princeton University",
+  "tagline": "I work on <strong>game-theoretic approaches to AI alignment</strong>, from regret minimization to incentive design for multi-agent LLM training.",
+  "email": "sankethk@princeton.edu",
+  "links": [
+    { "label": "LinkedIn", "text": "linkedin.com/in/sankethk", "url": "https://www.linkedin.com/in/sankethk" },
+    { "label": "GitHub", "text": "github.com/sankethskamath", "url": "https://github.com/sankethskamath" }
+  ],
+
+  "projects": [
+    {
+      "when": "2026, ongoing",
+      "title": "Game-theoretic approaches to AI alignment",
+      "sub": "Undergraduate research, Google DeepMind @ Princeton (Hazan Lab).",
+      "text": "Research on regret minimization in large games, equilibrium computation, and incentive design for multi-agent LLM training.",
+      "tags": ["game theory", "AI alignment", "multi-agent LLMs"],
+      "links": []
+    },
+    {
+      "when": "2026",
+      "title": "Market microstructure: order-flow toxicity and trade-signing",
+      "sub": "An empirical study of adverse selection in US equities.",
+      "bullets": [
+        "Measured adverse selection on 10.7M US equity orders across 5 tickers and 29 days using post-trade markouts and block-bootstrapped confidence intervals.",
+        "Benchmarked Lee-Ready, tick, quote, and EMO rules against ground-truth labels; found errors concentrate in a narrow near-mid band where Lee-Ready's 98% accuracy hides a reversal of the market maker's “quote/no-quote” decision.",
+        "Showed the standard (1-2p) attenuation correction fails: non-uniform errors mean global shrinkage reprices unaffected states and understates true adverse selection exactly where market makers get picked off."
+      ],
+      "tags": ["Python", "Pandas", "NumPy"],
+      "links": []
+    },
+    {
+      "when": "2024",
+      "title": "Deep learning for infant kidney ultrasound",
+      "sub": "Machine learning research internship, Children's National Hospital.",
+      "bullets": [
+        "Developed a WideResNet model to detect hydronephrosis in infants with PyTorch and MONAI, reaching 92% accuracy on kidney ultrasound data.",
+        "Fine-tuned generative models such as Stable Diffusion and StyleGAN3 to generate scientifically accurate images of syndromic infants, enlarging the dataset for classification models by 18%."
+      ],
+      "tags": ["PyTorch", "MONAI", "generative models"],
+      "links": []
+    },
+    {
+      "when": "2026",
+      "title": "This website",
+      "sub": "A hand-built static site with no framework.",
+      "text": "The blob on the home page is a noise-displaced sphere drawn in plain WebGL, with spring physics for the squash and stretch. Posts and notes are Markdown files turned into pages by a short Python script.",
+      "tags": ["WebGL", "Python"],
+      "links": [
+        { "text": "Source", "url": "https://github.com/sankethskamath/sankethskamath.github.io" }
+      ]
+    }
+  ],
+
+  "resume": [
+    {
+      "label": "Education",
+      "items": [
+        {
+          "when": "Expected May 2027",
+          "title": "Princeton University",
+          "sub": "Major in Operations Research and Financial Engineering · Minors in Math and Computer Science · GPA 3.8",
+          "text": "Relevant coursework: Probability & Stochastic Systems, Real Analysis, Probabilistic Combinatorics, Theoretical Machine Learning, High Frequency Markets, Regression & Applied Time Series, Monte Carlo Simulation, Algorithms & Data Structures, Fundamentals of Statistics, Optimization, Linear Algebra, Financial Mathematics."
+        }
+      ]
+    },
+    {
+      "label": "Experience",
+      "items": [
+        {
+          "when": "Aug 2026 – Present",
+          "title": "Undergraduate Researcher",
+          "sub": "Google DeepMind @ Princeton (Hazan Lab) · Princeton, NJ",
+          "bullets": [
+            "Conducting research on game-theoretic approaches to AI alignment: regret minimization in large games, equilibrium computation, and incentive design for multi-agent LLM training."
+          ]
+        },
+        {
+          "when": "Jun 2026 – Aug 2026",
+          "title": "Summer Analyst",
+          "sub": "Financial Strategy Group @ Citi · New York, NY",
+          "bullets": [
+            "Analyzed unstructured datasets to build a multivariate regression predicting agencies' credit ratings; manually spread 20+ issuers to isolate adjustment-level drivers of why smaller agencies (Kroll/DBRS) diverged from the market leader (S&P).",
+            "Developed a Monte Carlo liquidity model for healthcare clients, simulating cash flows under stochastic working-capital shocks via time-series realized volatilities, informing debt sizing decisions."
+          ]
+        },
+        {
+          "when": "Jun 2025 – Aug 2025",
+          "title": "Venture Capital Intern",
+          "sub": "Ben Franklin Technology Partners · Philadelphia, PA",
+          "bullets": [
+            "Performed due diligence on 8+ acquisition targets, speaking with target companies and analyzing multiple years of financial statements, resulting in the prioritization of 4+ acquisition targets.",
+            "Developed and presented pitch decks for investment opportunities across SaaS and healthcare."
+          ]
+        },
+        {
+          "when": "Jun 2024 – Aug 2024",
+          "title": "Machine Learning Research Intern",
+          "sub": "Children's National Hospital · Washington, D.C.",
+          "bullets": [
+            "Developed a deep learning WideResNet model to detect hydronephrosis in infants with the PyTorch and MONAI libraries, achieving 92% accuracy using kidney ultrasound data.",
+            "Fine-tuned generative AI models such as Stable Diffusion and StyleGAN3 in PyTorch to generate scientifically accurate images of syndromic infants, enhancing the dataset for classification models by 18%."
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Projects",
+      "items": [
+        {
+          "when": "2026",
+          "title": "Market Microstructure: Order-Flow Toxicity & Trade-Signing",
+          "sub": "Python, Pandas, NumPy",
+          "bullets": [
+            "Measured adverse selection on 10.7M US equity orders across 5 tickers and 29 days using post-trade markouts and block-bootstrapped confidence intervals.",
+            "Benchmarked Lee-Ready, tick, quote, and EMO rules against ground-truth labels; found errors concentrate in a narrow near-mid band where Lee-Ready's 98% accuracy hides a reversal of the market maker's “quote/no-quote” decision.",
+            "Showed the standard (1-2p) attenuation correction fails: non-uniform errors mean global shrinkage reprices unaffected states and understates true adverse selection exactly where market makers get picked off."
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Skills",
+      "items": [
+        { "when": "Languages", "text": "Proficient in Python and Java. Familiar with R, JavaScript, and SQL." },
+        { "when": "Technologies", "text": "Proficient in Pandas, NumPy, and PyTorch. Familiar with React.js, Git, and SciPy." },
+        { "when": "Activities", "text": "Tiger Investments, Annex Capital (student-run fund), Blockchain Club, intramural soccer." }
+      ]
+    }
+  ]
+}
