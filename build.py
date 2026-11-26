@@ -170,7 +170,8 @@ def head(title, description, path, root, math=False):
 <meta property="og:url" content="{esc(url)}">
 <meta property="og:image" content="{esc(SITE['url'])}/assets/og.png">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="{root}assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="{root}assets/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="{root}assets/apple-touch-icon.png">
 <link rel="preload" href="{root}assets/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="{root}assets/css/site.css">{math_css}
 </head>
@@ -185,7 +186,7 @@ def inner_page(key, title, description, path, body, root="", math=False):
     math_js = f'<script src="{root}assets/vendor/katex/katex.min.js" defer></script>\n' if math else ""
     return head(f"{title} · {SITE['name']}", description, path, root, math) + f"""<body>
 <header class="site-header">
-  <a class="brand" href="{root}index.html"><span class="orb" aria-hidden="true"></span><span>{esc(SITE['first'])} <em>{esc(SITE['last'])}</em></span></a>
+  <a class="brand" href="{root}index.html"><img class="mark" src="{root}assets/blob-mark.png" width="28" height="28" alt=""><span>{esc(SITE['first'])} <em>{esc(SITE['last'])}</em></span></a>
   <nav class="site-nav" aria-label="Sections">
       {links}
   </nav>

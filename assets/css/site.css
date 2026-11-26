@@ -213,16 +213,9 @@ a:focus-visible, button:focus-visible, #grab:focus-visible { outline: 2px solid 
 .brand { display: inline-flex; align-items: center; gap: 0.625rem; text-decoration: none; font-family: var(--font-display); font-size: 1.3125rem; letter-spacing: -0.01em; line-height: 1.2; }
 .brand em { font-weight: 300; }
 .brand:hover { color: var(--ink); }
-.orb { box-shadow: 0 0 0 1.5px rgba(255, 255, 255, 0.55); }
-.orb {
-  flex: none;
-  width: 1.125rem;
-  height: 1.125rem;
-  border-radius: 50%;
-  background: radial-gradient(circle at 32% 28%, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0) 38%), var(--blob-gradient);
-  transition: transform 300ms;
-}
-.brand:hover .orb { transform: scale(1.25) rotate(90deg); }
+/* The header mark is a still of the home page blob. */
+.mark { flex: none; display: block; width: 1.75rem; height: 1.75rem; transition: transform 300ms; }
+.brand:hover .mark { transform: scale(1.15) rotate(-12deg); }
 .site-nav { display: flex; flex-wrap: wrap; gap: 0.25rem 1.5rem; font-size: 0.9375rem; }
 .site-nav a { color: var(--muted); text-decoration: none; padding: 0.25rem 0; }
 .site-nav a:hover { color: var(--ink); }
@@ -397,7 +390,7 @@ a:focus-visible, button:focus-visible, #grab:focus-visible { outline: 2px solid 
 
 @media (prefers-reduced-motion: reduce) {
   @view-transition { navigation: none; }
-  .pill, .pill::after, .orb, .btn, .row-title a::after, .download-btn, .download-btn::after { transition: none; }
+  .pill, .pill::after, .mark, .btn, .row-title a::after, .download-btn, .download-btn::after { transition: none; }
 }
 
 /* Printing (and the resume PDF, which is made by printing the resume page):
