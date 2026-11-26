@@ -170,7 +170,7 @@ def head(title, description, path, root, math=False):
 <meta property="og:url" content="{esc(url)}">
 <meta property="og:image" content="{esc(SITE['url'])}/assets/og.png">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="{root}assets/favicon.png" type="image/png">
+<link rel="icon" href="{root}assets/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="{root}assets/apple-touch-icon.png">
 <link rel="preload" href="{root}assets/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="{root}assets/css/site.css">{math_css}
@@ -186,7 +186,7 @@ def inner_page(key, title, description, path, body, root="", math=False):
     math_js = f'<script src="{root}assets/vendor/katex/katex.min.js" defer></script>\n' if math else ""
     return head(f"{title} · {SITE['name']}", description, path, root, math) + f"""<body>
 <header class="site-header">
-  <a class="brand" href="{root}index.html"><img class="mark" src="{root}assets/blob-mark.png" width="28" height="28" alt=""><span>{esc(SITE['first'])} <em>{esc(SITE['last'])}</em></span></a>
+  <a class="brand" href="{root}index.html"><svg class="mark" viewBox="0 0 22 22" aria-hidden="true"><rect x="1" y="1" width="9" height="9" rx="2" fill="currentColor"/><rect x="12.750" y="1.750" width="7.500" height="7.500" rx="1.500" fill="none" stroke="currentColor" stroke-width="1.500"/><rect x="1.750" y="12.750" width="7.500" height="7.500" rx="1.500" fill="none" stroke="currentColor" stroke-width="1.500"/><rect class="mark-pick" x="12" y="12" width="9" height="9" rx="2"/></svg><span>{esc(SITE['first'])} <em>{esc(SITE['last'])}</em></span></a>
   <nav class="site-nav" aria-label="Sections">
       {links}
   </nav>
