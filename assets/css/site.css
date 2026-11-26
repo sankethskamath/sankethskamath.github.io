@@ -109,7 +109,7 @@ a:focus-visible, button:focus-visible, #grab:focus-visible { outline: 2px solid 
 }
 .tagline strong { color: var(--ink); font-weight: 500; }
 
-/* The blob's stage: a square the canvas overfills so stretches are not clipped. */
+/* The blob's stage: a square that sets the blob's size and position. */
 .stage {
   position: absolute;
   z-index: 1;
@@ -140,7 +140,8 @@ a:focus-visible, button:focus-visible, #grab:focus-visible { outline: 2px solid 
   background: radial-gradient(closest-side, var(--shadow), transparent);
   z-index: 0;
 }
-#blob { position: absolute; left: -20%; top: -20%; width: 140%; height: 140%; z-index: 1; display: block; pointer-events: none; }
+/* The canvas is far bigger than the blob so that a stretched blob is never cut off at its edge. */
+#blob { position: absolute; left: -60%; top: -60%; width: 220%; height: 220%; z-index: 1; display: block; pointer-events: none; }
 #grab { position: absolute; inset: 16%; border-radius: 50%; z-index: 3; cursor: grab; touch-action: none; }
 #grab.dragging { cursor: grabbing; }
 .fallback {

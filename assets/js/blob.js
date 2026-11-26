@@ -79,7 +79,7 @@
     '  vN = normalize(cross(p1 - p0, p2 - p0));',
     '  vV = vp;',
     '  vH = field(n);',
-    '  float f = 2.2654;',
+    '  float f = 1.4416;',
     '  float near = 0.1, far = 20.0;',
     '  gl_Position = vec4(vp.x * f, vp.y * f, (far + near) / (near - far) * vp.z + 2.0 * far * near / (near - far), -vp.z);',
     '}'
@@ -202,7 +202,7 @@
 
   function resize() {
     var dpr = Math.min(window.devicePixelRatio || 1, 2);
-    var w = Math.max(1, Math.round(canvas.clientWidth * dpr));
+    var w = Math.min(2600, Math.max(1, Math.round(canvas.clientWidth * dpr)));
     if (canvas.width !== w) { canvas.width = w; canvas.height = w; }
     gl.viewport(0, 0, canvas.width, canvas.height);
   }
@@ -256,7 +256,7 @@
   // Pointer: lean toward the cursor, press to squeeze, drag to pull.
   function toWorld(e) {
     var r = canvas.getBoundingClientRect();
-    var u = 2 * (4.6 / 2.2654) / r.height;
+    var u = 2 * (4.6 / 1.4416) / r.height;
     return [(e.clientX - (r.left + r.width / 2)) * u, -(e.clientY - (r.top + r.height / 2)) * u];
   }
   window.addEventListener('pointermove', function (e) {
